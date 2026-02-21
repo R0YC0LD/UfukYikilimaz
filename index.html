@@ -74,6 +74,16 @@
         .pp-container img { width: 100%; height: 100%; object-fit: cover; }
         .shn-name { font-size: 2.2rem; font-weight: 700; letter-spacing: -2px; font-family: 'Syncopate'; }
 
+        /* Artist Info Card */
+        .info-card {
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 15px; padding: 15px; margin-bottom: 25px; text-align: left;
+        }
+        .info-item { margin-bottom: 8px; font-size: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 5px; }
+        .info-item:last-child { border: none; }
+        .info-label { color: var(--shn-red); font-family: 'Space Mono'; font-weight: bold; width: 100px; display: inline-block; }
+        .info-value { color: #ccc; }
+
         .section-title {
             font-family: 'Space Mono'; font-size: 0.75rem; color: var(--shn-red);
             text-transform: uppercase; letter-spacing: 4px; margin: 35px 0 15px 0;
@@ -127,7 +137,16 @@
                 <img src="sehinsah.jpg" alt="Şehinşah">
             </div>
             <h1 class="shn-name">UFUK YIKILMAZ</h1>
-            <p style="font-size:0.75rem; color:var(--secondary); font-family:'Space Mono'; letter-spacing: 2px;">AUTHORITY // SHN ACCESS</p>
+            <p style="font-size:0.75rem; color:var(--secondary); font-family:'Space Mono'; letter-spacing: 2px; margin-bottom: 20px;">AUTHORITY // SHN ACCESS</p>
+            
+            <div class="info-card">
+                <div class="info-item"><span class="info-label">AKA</span><span class="info-value">HSNSBBH</span></div>
+                <div class="info-item"><span class="info-label">DOĞUM</span><span class="info-value">27.12.1986 (Kemah, Erzincan)</span></div>
+                <div class="info-item"><span class="info-label">TARZ</span><span class="info-value">Hip hop, Trap, Baile Funk</span></div>
+                <div class="info-item"><span class="info-label">MESLEK</span><span class="info-value">Müzisyen, Söz Yazarı, Film Yapımcısı, Editör</span></div>
+                <div class="info-item"><span class="info-label">ETKİN</span><span class="info-value">2002 - Günümüz</span></div>
+                <div class="info-item"><span class="info-label">LABEL</span><span class="info-value">Karma Company</span></div>
+            </div>
         </div>
 
         <div class="section-title">Yaşam Döngüsü</div>
@@ -209,7 +228,6 @@
 
         async function startImageScanning() {
             const grid = document.getElementById('photo-grid');
-            // 1'den 20'ye kadar tüm sayılar için tarama yap
             for (let i = 1; i <= 20; i++) {
                 tryExtension(i, 0);
             }
@@ -217,12 +235,9 @@
 
         function tryExtension(index, extIndex) {
             if (extIndex >= extensions.length) return;
-
             const img = new Image();
             const ext = extensions[extIndex];
-            // Cache problemini aşmak için timestamp ekliyoruz
             img.src = `${index}.${ext}?v=${new Date().getTime()}`;
-
             img.onload = function() {
                 foundCount++;
                 const slot = document.createElement('div');
@@ -232,9 +247,7 @@
                 document.getElementById('photo-grid').appendChild(slot);
                 updateProgress();
             };
-
             img.onerror = function() {
-                // Bu uzantı bulunamadıysa bir sonrakini dene
                 tryExtension(index, extIndex + 1);
             };
         }
