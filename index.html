@@ -7,10 +7,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Space+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0a0a0a;
-            --card-bg: #141414;
+            --bg: #050505;
+            --card-bg: #0f0f0f;
             --accent: #ffffff;
-            --secondary: #888888;
+            --secondary: #555555;
+            --shn-red: #ff003c;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -19,11 +20,11 @@
             background-color: var(--bg);
             color: var(--accent);
             font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            overflow-x: hidden;
+            overflow: hidden;
+            height: 100vh;
         }
 
-        /* --- LOADING INTRO --- */
+        /* --- INTRO SİSTEMİ --- */
         #intro {
             position: fixed;
             inset: 0;
@@ -32,229 +33,235 @@
             justify-content: center;
             align-items: center;
             z-index: 2000;
-            transition: opacity 0.8s ease;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            cursor: pointer;
         }
 
-        .karma-minimal {
-            width: 120px;
-            opacity: 0;
-            animation: fadeIn 1.5s forwards ease-in-out;
+        /* Arka Planda Süzülen Yazılar */
+        .floating-text-container {
+            position: absolute;
+            inset: 0;
+            opacity: 0.15;
+            pointer-events: none;
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .float-text {
+            position: absolute;
+            font-family: 'Space Mono';
+            font-size: 0.8rem;
+            color: #fff;
+            white-space: nowrap;
+            animation: move linear infinite;
+        }
 
-        /* --- MAIN LAYOUT --- */
+        @keyframes move {
+            from { transform: translateY(100vh); }
+            to { transform: translateY(-100px); }
+        }
+
+        .karma-svg {
+            width: 180px;
+            z-index: 10;
+            fill: #fff;
+            filter: drop-shadow(0 0 15px rgba(255,255,255,0.4));
+            animation: karmaPulse 3s infinite ease-in-out;
+        }
+
+        @keyframes karmaPulse {
+            0%, 100% { opacity: 0.5; transform: scale(0.95); filter: drop-shadow(0 0 5px #fff); }
+            50% { opacity: 1; transform: scale(1.05); filter: drop-shadow(0 0 25px var(--shn-red)); }
+        }
+
+        /* --- ANA İÇERİK --- */
         main {
-            padding: 25px;
-            max-width: 500px;
+            padding: 20px;
+            max-width: 450px;
             margin: 0 auto;
             opacity: 0;
-            transition: 1s ease;
+            transition: 1.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            height: 100vh;
+            overflow-y: auto;
         }
 
         .header {
-            text-align: center;
-            margin-bottom: 40px;
-            margin-top: 20px;
+            text-align: left;
+            margin: 30px 0 10px 0;
+            border-left: 3px solid #fff;
+            padding-left: 15px;
         }
 
-        .shn-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            letter-spacing: -1px;
-            margin-bottom: 5px;
-        }
+        .shn-title { font-size: 2rem; font-weight: 700; letter-spacing: -1px; }
+        .sub-data { font-family: 'Space Mono'; font-size: 0.65rem; color: var(--secondary); }
 
-        .sub-data {
-            font-family: 'Space Mono';
-            font-size: 0.7rem;
-            color: var(--secondary);
-            text-transform: uppercase;
-        }
-
-        /* --- STATS CARD --- */
         .card {
             background: var(--card-bg);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid #222;
+            border-radius: 15px;
+            padding: 18px;
+            border: 1px solid #1a1a1a;
         }
 
         .stat-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #1f1f1f;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #161616;
         }
+        .stat-row:last-child { border: none; margin: 0; padding: 0; }
 
-        .stat-row:last-child { border: none; margin: 0; }
+        .label { font-size: 0.6rem; color: var(--secondary); text-transform: uppercase; letter-spacing: 1px; }
+        .value { font-size: 0.85rem; font-family: 'Space Mono'; }
 
-        .label { font-size: 0.7rem; color: var(--secondary); text-transform: uppercase; }
-        .value { font-size: 0.9rem; font-weight: 600; font-family: 'Space Mono'; }
-
-        /* --- PHOTO PROGRESS SECTION --- */
+        /* --- KOLEKSİYON --- */
         .progress-section {
             background: var(--card-bg);
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 20px;
-            border: 1px solid #222;
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid #1a1a1a;
         }
 
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
+        .bar-bg {
+            width: 100%; height: 4px; background: #1a1a1a; border-radius: 2px; margin: 10px 0 20px 0;
         }
 
-        .progress-bar-container {
-            width: 100%;
-            height: 8px;
-            background: #222;
-            border-radius: 10px;
-            overflow: hidden;
+        #bar-fill {
+            height: 100%; width: 0%; background: #fff; box-shadow: 0 0 10px #fff;
+            transition: width 2s cubic-bezier(0.2, 0, 0.2, 1);
         }
 
-        #progress-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #333, #fff);
-            transition: width 1.5s cubic-bezier(0.1, 0, 0.1, 1);
-        }
-
-        .photo-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 20px;
-        }
+        .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 
         .photo-slot {
-            aspect-ratio: 1;
-            background: #1a1a1a;
-            border-radius: 10px;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            aspect-ratio: 1; background: #050505; border-radius: 8px; overflow: hidden;
+            display: flex; justify-content: center; align-items: center; border: 1px solid #161616;
         }
-
         .photo-slot img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* --- BUTTONS --- */
-        .action-btns {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
+        /* --- İMZA --- */
+        .signature {
+            text-align: center;
+            margin-top: auto;
+            padding: 20px 0;
+            font-size: 0.6rem;
+            color: var(--secondary);
+            font-family: 'Space Mono';
+            letter-spacing: 1px;
         }
 
-        .btn {
-            background: var(--card-bg);
+        .signature a {
             color: #fff;
             text-decoration: none;
-            padding: 15px;
-            border-radius: 15px;
-            text-align: center;
-            font-size: 0.8rem;
-            border: 1px solid #222;
-            font-weight: 600;
+            font-weight: 700;
+            border-bottom: 1px solid var(--secondary);
+            transition: 0.3s;
         }
 
-        .btn.active { background: #fff; color: #000; }
+        .signature a:hover { color: var(--shn-red); border-color: var(--shn-red); }
 
+        .nav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .btn {
+            background: #fff; color: #000; text-decoration: none; padding: 14px;
+            border-radius: 12px; text-align: center; font-size: 0.75rem; font-weight: 700;
+        }
+        .btn-alt { background: var(--card-bg); color: #fff; border: 1px solid #1a1a1a; }
     </style>
 </head>
 <body onload="init()">
 
-    <div id="intro" onclick="start()">
-        <img src="https://i.imgur.com/GisLhY4.png" class="karma-minimal" alt="KARMA">
+    <div id="intro" onclick="reveal()">
+        <div class="floating-text-container" id="flow"></div>
+        <svg class="karma-svg" viewBox="0 0 300 150">
+            <path d="M40,70 Q60,20 90,70 T140,70 M160,30 L160,110 M180,70 Q210,20 240,70 T290,70 M40,100 L260,100" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
+            <text x="50%" y="85" text-anchor="middle" font-family="Syncopate, sans-serif" font-weight="bold" font-size="45" fill="white">KARMA</text>
+        </svg>
     </div>
 
     <main id="main">
         <div class="header">
             <h1 class="shn-title">UFUK YIKILMAZ</h1>
-            <div class="sub-data">ID: 271286 / KARMA COMPANY ACCESS</div>
+            <div class="sub-data">AUTH: 271286 / PROJECT: KARMA</div>
         </div>
 
         <div class="card">
             <div class="stat-row">
-                <span class="label">Sistem Durumu</span>
-                <span class="value" style="color: #4cd137;">AKTİF</span>
+                <span class="label">Status</span>
+                <span class="value">AUTHORIZED</span>
             </div>
             <div class="stat-row">
-                <span class="label">Yaşam Döngüsü</span>
-                <span class="value" id="age-timer">00.00000000</span>
-            </div>
-            <div class="stat-row">
-                <span class="label">Lokasyon</span>
-                <span class="value">İSTANBUL / TR</span>
+                <span class="label">Life Cycle</span>
+                <span class="value" id="timer">00.00000000</span>
             </div>
         </div>
 
         <div class="progress-section">
-            <div class="progress-header">
-                <span class="label">Koleksiyon İlerlemesi</span>
-                <span class="value" id="count-text">0 / 100</span>
+            <div class="progress-header" style="display:flex; justify-content:space-between">
+                <span class="label">Collection</span>
+                <span class="value" id="count-label" style="font-size:0.7rem">0 / 100</span>
             </div>
-            <div class="progress-bar-container">
-                <div id="progress-fill"></div>
-            </div>
-            
-            <div class="photo-grid" id="photo-container">
-                </div>
+            <div class="bar-bg"><div id="bar-fill"></div></div>
+            <div class="photo-grid" id="grid"></div>
         </div>
 
-        <div class="action-btns">
-            <a href="https://open.spotify.com/artist/6S08W6X966InC96S69SInA" class="btn active">SPOTIFY</a>
-            <a href="https://instagram.com/sehinshah" class="btn">INSTAGRAM</a>
+        <div class="nav-grid">
+            <a href="http://googleusercontent.com/spotify.com/4" target="_blank" class="btn">Spotify</a>
+            <a href="https://instagram.com/sehinshah" target="_blank" class="btn btn-alt">Instagram</a>
         </div>
-        
-        <p style="text-align: center; font-size: 0.6rem; color: #333; margin-top: 30px; font-family: 'Space Mono';">
-            ENCRYPTED DATA SOURCE // 2026
-        </p>
+
+        <div class="signature">
+            MADE BY <a href="https://www.instagram.com/on_r19/" target="_blank">ONUR (R0YC0LD) TERYAKİOĞLU</a>
+        </div>
     </main>
 
     <script>
-        // AYAR: Buraya Github'daki fotoğraflarının sayısını yazabilirsin 
-        // Ya da Github API ile otomatik çekebiliriz (Şimdilik manuel sayı belirleyelim)
-        const currentPhotoCount = 3; // Burayı çektiğin foto sayısına göre güncelle
-        const targetCount = 100;
+        const photoCount = 3; 
+        const maxGoal = 100;
+        const tracks = ["DEEV", "KARMA", "YAK YAK YAK", "İSTİLA", "PİRHANE", "ATLAS", "AUTOPILOT", "MİLYON", "GENSİN", "HİP HOP"];
 
         function init() {
-            // Yaş sayacı başlat
-            const birth = new Date('1986-12-27T00:00:00');
+            // Arka plan yazıları oluştur
+            const flow = document.getElementById('flow');
+            for(let i=0; i<20; i++) {
+                const span = document.createElement('span');
+                span.className = 'float-text';
+                span.innerText = tracks[Math.floor(Math.random()*tracks.length)];
+                span.style.left = Math.random() * 100 + 'vw';
+                span.style.animationDuration = (Math.random() * 5 + 3) + 's';
+                span.style.animationDelay = (Math.random() * 5) + 's';
+                flow.appendChild(span);
+            }
+
+            // Yaş
+            const bday = new Date('1986-12-27T00:00:00');
             setInterval(() => {
-                const now = new Date();
-                const age = (now - birth) / (1000 * 60 * 60 * 24 * 365.25);
-                document.getElementById('age-timer').innerText = age.toFixed(8);
+                const age = (new Date() - bday) / (1000 * 60 * 60 * 24 * 365.25);
+                document.getElementById('timer').innerText = age.toFixed(8);
             }, 100);
 
-            // Fotoğraf slotlarını oluştur
-            const container = document.getElementById('photo-container');
-            for(let i=1; i<=6; i++) { // İlk 6 slotu göster
+            // Grid
+            const grid = document.getElementById('grid');
+            for(let i=1; i<=6; i++) {
                 const slot = document.createElement('div');
                 slot.className = 'photo-slot';
-                if(i <= currentPhotoCount) {
-                    slot.innerHTML = `<img src="photos/${i}.jpg" onerror="this.src='https://via.placeholder.com/150/111/fff?text=IMG'">`;
+                if(i <= photoCount) {
+                    slot.innerHTML = `<img src="${i}.jpg" onerror="this.parentElement.innerHTML='<small>ERR</small>'">`;
                 } else {
-                    slot.innerHTML = `<span style="color:#222; font-size:12px;">${i}</span>`;
+                    slot.innerHTML = `<span style="color:#111; font-size:10px;">${i}</span>`;
                 }
-                container.appendChild(slot);
+                grid.appendChild(slot);
             }
         }
 
-        function start() {
+        function reveal() {
             document.getElementById('intro').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('intro').style.display = 'none';
                 document.getElementById('main').style.opacity = '1';
-                // Progress bar'ı doldur
-                const percent = (currentPhotoCount / targetCount) * 100;
-                document.getElementById('progress-fill').style.width = percent + '%';
-                document.getElementById('count-text').innerText = `${currentPhotoCount} / ${targetCount}`;
+                document.getElementById('bar-fill').style.width = (photoCount/maxGoal)*100 + '%';
+                document.getElementById('count-label').innerText = `${photoCount} / ${maxGoal}`;
             }, 800);
         }
     </script>
