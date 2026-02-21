@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SHN | THE UNIVERSE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Space+Mono&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Space+Mono:wght@400;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #030303;
             --card-bg: #0a0a0a;
             --accent: #ffffff;
+            --shn-pink: #ff007f; /* İkonik Şehinşah Pembesi */
             --shn-red: #ff003c;
             --secondary: #444;
         }
@@ -17,117 +18,112 @@
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg); color: var(--accent); font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-        /* --- SİNEMATİK INTRO --- */
+        /* --- SİNEMATİK DİNAMİK INTRO --- */
         #intro {
-            position: fixed; inset: 0; background: #000; display: flex;
-            justify-content: center; align-items: center; z-index: 2000;
-            transition: all 1s cubic-bezier(0.9, 0, 0.1, 1); overflow: hidden; cursor: pointer;
+            position: fixed; inset: 0; background: radial-gradient(circle at center, #1a000d 0%, #000 100%); 
+            display: flex; justify-content: center; align-items: center; z-index: 2000;
+            transition: all 1.2s cubic-bezier(0.9, 0, 0.1, 1); overflow: hidden; cursor: pointer;
         }
 
-        .flow-container {
-            position: absolute; inset: 0; opacity: 0.08;
-            display: flex; flex-direction: column; gap: 10px;
-            transform: rotate(-5deg) scale(1.1);
-            filter: blur(1px);
+        .falling-text {
+            position: absolute; font-family: 'Syncopate'; font-size: 1.2rem;
+            color: var(--shn-pink); opacity: 0.15; white-space: nowrap;
+            pointer-events: none; user-select: none; z-index: 1;
+            filter: blur(1px); transition: opacity 0.5s;
         }
-
-        .flow-line {
-            white-space: nowrap; font-family: 'Syncopate'; font-size: 2rem;
-            animation: slide 60s linear infinite;
-            color: var(--accent);
-            letter-spacing: 15px;
-        }
-        .flow-line:nth-child(even) { animation-direction: reverse; color: var(--shn-red); }
-
-        @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
         .karma-container {
             position: relative; z-index: 10;
             display: flex; flex-direction: column; align-items: center;
+            background: rgba(0,0,0,0.4); padding: 40px; border-radius: 50%;
+            backdrop-filter: blur(10px); box-shadow: 0 0 100px rgba(255, 0, 127, 0.1);
         }
 
         .karma-img {
-            width: 260px;
-            animation: breatheImg 4s infinite ease-in-out;
+            width: 280px;
+            animation: breatheImg 3s infinite ease-in-out;
+            filter: drop-shadow(0 0 30px rgba(255, 0, 127, 0.4));
         }
 
         @keyframes breatheImg {
-            0%, 100% { opacity: 0.5; transform: scale(0.98); filter: brightness(0.7) blur(1px); }
-            50% { opacity: 1; transform: scale(1.02); filter: brightness(1.2) drop-shadow(0 0 40px var(--shn-red)) blur(0px); }
+            0%, 100% { opacity: 0.7; transform: scale(0.95); filter: hue-rotate(0deg) drop-shadow(0 0 20px var(--shn-pink)); }
+            50% { opacity: 1; transform: scale(1.05); filter: hue-rotate(15deg) drop-shadow(0 0 50px var(--shn-pink)); }
         }
 
         .tap-indication {
-            margin-top: 20px; font-family: 'Space Mono'; font-size: 0.6rem;
-            letter-spacing: 5px; color: var(--secondary); animation: blink 2s infinite;
+            margin-top: 25px; font-family: 'Space Mono'; font-size: 0.7rem;
+            letter-spacing: 8px; color: var(--shn-pink); font-weight: bold;
+            animation: blink 1.5s infinite; text-shadow: 0 0 10px var(--shn-pink);
         }
-        @keyframes blink { 50% { opacity: 0; } }
+        @keyframes blink { 50% { opacity: 0.2; transform: scale(0.9); } }
 
         /* --- ANA İÇERİK --- */
-        main { padding: 25px; max-width: 500px; margin: 0 auto; opacity: 0; transform: translateY(30px); transition: 1.5s cubic-bezier(0.2, 0, 0.2, 1); padding-bottom: 80px; }
+        main { padding: 25px; max-width: 500px; margin: 0 auto; opacity: 0; transform: scale(0.9); transition: 1.5s cubic-bezier(0.2, 0, 0.2, 1); padding-bottom: 80px; }
 
         .profile-section { text-align: center; margin: 40px 0 20px; }
         .pp-container {
-            width: 140px; height: 140px; border-radius: 50%; margin: 0 auto 20px;
-            border: 2px solid var(--accent); overflow: hidden; background: #111;
-            box-shadow: 0 0 30px rgba(255, 0, 60, 0.15);
+            width: 150px; height: 150px; border-radius: 50%; margin: 0 auto 20px;
+            border: 3px solid var(--shn-pink); overflow: hidden; background: #111;
+            box-shadow: 0 0 40px rgba(255, 0, 127, 0.3);
         }
         .pp-container img { width: 100%; height: 100%; object-fit: cover; }
-        .shn-name { font-size: 2.2rem; font-weight: 700; letter-spacing: -2px; font-family: 'Syncopate'; }
+        .shn-name { font-size: 2.2rem; font-weight: 700; letter-spacing: -2px; font-family: 'Syncopate'; color: var(--accent); }
 
-        /* Artist Info Card */
         .info-card {
-            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 15px; padding: 15px; margin-bottom: 25px; text-align: left;
+            background: rgba(255, 0, 127, 0.03); border: 1px solid rgba(255, 0, 127, 0.15);
+            border-radius: 20px; padding: 20px; margin-bottom: 25px; text-align: left;
+            backdrop-filter: blur(5px);
         }
-        .info-item { margin-bottom: 8px; font-size: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 5px; }
+        .info-item { margin-bottom: 10px; font-size: 0.75rem; border-bottom: 1px solid rgba(255,0,127,0.05); padding-bottom: 8px; }
         .info-item:last-child { border: none; }
-        .info-label { color: var(--shn-red); font-family: 'Space Mono'; font-weight: bold; width: 100px; display: inline-block; }
-        .info-value { color: #ccc; }
+        .info-label { color: var(--shn-pink); font-family: 'Space Mono'; font-weight: bold; width: 100px; display: inline-block; text-shadow: 0 0 5px rgba(255,0,127,0.5); }
+        .info-value { color: #eee; font-weight: 300; }
 
         .section-title {
-            font-family: 'Space Mono'; font-size: 0.75rem; color: var(--shn-red);
+            font-family: 'Space Mono'; font-size: 0.75rem; color: var(--shn-pink);
             text-transform: uppercase; letter-spacing: 4px; margin: 35px 0 15px 0;
             display: flex; align-items: center; gap: 15px;
         }
-        .section-title::after { content: ""; flex: 1; height: 1px; background: #1a1a1a; }
+        .section-title::after { content: ""; flex: 1; height: 1px; background: linear-gradient(to right, var(--shn-pink), transparent); opacity: 0.3; }
 
         .life-cycle-card {
-            background: #080808; border: 1px solid #151515; padding: 20px; border-radius: 20px; margin-bottom: 25px; text-align: center;
+            background: #080808; border: 1px solid #1a1a1a; padding: 25px; border-radius: 25px; margin-bottom: 25px; text-align: center;
+            box-shadow: inset 0 0 20px rgba(255, 0, 127, 0.02);
         }
-        #age-timer { font-family: 'Space Mono'; font-size: 1.4rem; font-weight: 700; color: var(--shn-red); }
+        #age-timer { font-family: 'Space Mono'; font-size: 1.5rem; font-weight: 700; color: var(--shn-pink); text-shadow: 0 0 15px rgba(255,0,127,0.4); }
 
-        .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
-        .photo-slot { aspect-ratio: 1; background: #080808; border-radius: 12px; overflow: hidden; border: 1px solid #151515; display: none; }
-        .photo-slot img { width: 100%; height: 100%; object-fit: cover; }
+        .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 20px; }
+        .photo-slot { aspect-ratio: 1; background: #080808; border-radius: 15px; overflow: hidden; border: 1px solid #1a1a1a; display: none; transition: 0.3s; }
+        .photo-slot:hover { border-color: var(--shn-pink); transform: scale(1.05); }
 
-        .progress-container { background: var(--card-bg); padding: 20px; border-radius: 20px; border: 1px solid #151515; }
-        .bar-bg { width: 100%; height: 6px; background: #111; border-radius: 10px; margin-top: 12px; overflow: hidden; }
-        #bar-fill { height: 100%; width: 0%; background: #fff; box-shadow: 0 0 15px #fff; border-radius: 10px; transition: 2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .progress-container { background: var(--card-bg); padding: 20px; border-radius: 25px; border: 1px solid #1a1a1a; }
+        .bar-bg { width: 100%; height: 8px; background: #111; border-radius: 10px; margin-top: 15px; overflow: hidden; }
+        #bar-fill { height: 100%; width: 0%; background: var(--shn-pink); box-shadow: 0 0 20px var(--shn-pink); border-radius: 10px; transition: 2.5s cubic-bezier(0.4, 0, 0.2, 1); }
 
         .album-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .album-card { background: var(--card-bg); border-radius: 15px; overflow: hidden; border: 1px solid #151515; text-decoration: none; transition: 0.4s; }
-        .album-img { width: 100%; aspect-ratio: 1; background: #111; }
-        .album-img img { width: 100%; height: 100%; object-fit: cover; }
-        .album-info { padding: 12px; }
-        .album-name { font-size: 0.8rem; font-weight: 700; color: #fff; display: block; }
-        .album-date { font-size: 0.6rem; color: var(--secondary); font-family: 'Space Mono'; }
+        .album-card { background: var(--card-bg); border-radius: 20px; overflow: hidden; border: 1px solid #1a1a1a; text-decoration: none; transition: 0.5s; }
+        .album-card:hover { border-color: var(--shn-pink); transform: translateY(-8px); box-shadow: 0 10px 30px rgba(255, 0, 127, 0.1); }
+        .album-info { padding: 15px; }
+        .album-name { font-size: 0.85rem; font-weight: 700; color: #fff; display: block; margin-bottom: 5px; }
+        .album-date { font-size: 0.65rem; color: var(--secondary); font-family: 'Space Mono'; }
 
-        .social-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
-        .btn { padding: 16px; border-radius: 15px; text-align: center; font-size: 0.8rem; font-weight: 700; text-decoration: none; transition: 0.3s; }
+        .btn { padding: 18px; border-radius: 20px; text-align: center; font-size: 0.85rem; font-weight: 700; text-decoration: none; transition: 0.4s; border: 1px solid transparent; }
         .btn-spotify { background: #1DB954; color: white; }
-        .btn-insta { background: #fff; color: #000; }
+        .btn-insta { background: transparent; color: var(--shn-pink); border-color: var(--shn-pink); }
+        .btn:hover { filter: brightness(1.2); transform: scale(1.02); }
 
-        .sig { margin-top: 60px; text-align: center; font-size: 0.65rem; color: #333; font-family: 'Space Mono'; }
-        .sig a { color: #666; text-decoration: none; font-weight: 700; transition: 0.3s; }
+        .sig { margin-top: 70px; text-align: center; font-size: 0.7rem; color: #333; font-family: 'Space Mono'; letter-spacing: 2px; }
+        .sig a { color: var(--shn-pink); text-decoration: none; font-weight: 700; transition: 0.3s; opacity: 0.6; }
+        .sig a:hover { opacity: 1; text-shadow: 0 0 10px var(--shn-pink); }
     </style>
 </head>
 <body onload="init()">
 
     <div id="intro" onclick="reveal()">
-        <div class="flow-container" id="flow"></div>
+        <div id="matrix-bg"></div>
         <div class="karma-container">
             <img src="karma.png" class="karma-img" alt="KARMA">
-            <div class="tap-indication">ACCESS REQUESTED</div>
+            <div class="tap-indication">UNIVERSE CONNECTING</div>
         </div>
     </div>
 
@@ -137,86 +133,74 @@
                 <img src="sehinsah.jpg" alt="Şehinşah">
             </div>
             <h1 class="shn-name">UFUK YIKILMAZ</h1>
-            <p style="font-size:0.75rem; color:var(--secondary); font-family:'Space Mono'; letter-spacing: 2px; margin-bottom: 20px;">AUTHORITY // SHN ACCESS</p>
+            <p style="font-size:0.8rem; color:var(--shn-pink); font-family:'Space Mono'; letter-spacing: 3px; margin-bottom: 25px; font-weight: bold;">PREMIUM AUTH // SHN</p>
             
             <div class="info-card">
-                <div class="info-item"><span class="info-label">AKA</span><span class="info-value">HSNSBBH</span></div>
+                <div class="info-item"><span class="info-label">AKA</span><span class="info-value">HSNSBBH / ŞEHİNŞAH</span></div>
                 <div class="info-item"><span class="info-label">DOĞUM</span><span class="info-value">27.12.1986 (Kemah, Erzincan)</span></div>
                 <div class="info-item"><span class="info-label">TARZ</span><span class="info-value">Hip hop, Trap, Baile Funk</span></div>
-                <div class="info-item"><span class="info-label">MESLEK</span><span class="info-value">Müzisyen, Söz Yazarı, Film Yapımcısı, Editör</span></div>
-                <div class="info-item"><span class="info-label">ETKİN</span><span class="info-value">2002 - Günümüz</span></div>
+                <div class="info-item"><span class="info-label">MESLEK</span><span class="info-value">Müzisyen, Söz Yazarı, Prodüktör</span></div>
+                <div class="info-item"><span class="info-label">ETKİN</span><span class="info-value">2002 - Present</span></div>
                 <div class="info-item"><span class="info-label">LABEL</span><span class="info-value">Karma Company</span></div>
             </div>
         </div>
 
-        <div class="section-title">Yaşam Döngüsü</div>
+        <div class="section-title">Life Cycle</div>
         <div class="life-cycle-card">
             <div id="age-timer">00.00000000</div>
-            <p style="font-size:0.6rem; color:var(--secondary); margin-top:8px; font-family:'Space Mono'">BIOLOGICAL STATUS: ACTIVE</p>
+            <p style="font-size:0.6rem; color:var(--secondary); margin-top:10px; font-family:'Space Mono'; letter-spacing: 1px;">GENETIC STATUS: SUPERIOR</p>
         </div>
 
-        <div class="section-title">Koleksiyon Durumu</div>
+        <div class="section-title">Archive Progress</div>
         <div class="progress-container">
-            <div style="display:flex; justify-content:space-between; font-size:0.7rem; font-family:'Space Mono'">
-                <span>ARŞİV ANALİZİ</span>
+            <div style="display:flex; justify-content:space-between; font-size:0.75rem; font-family:'Space Mono'; font-weight: bold;">
+                <span style="color: var(--shn-pink);">COLLECTION DATA</span>
                 <span id="count-label">0 / 100</span>
             </div>
             <div class="bar-bg"><div id="bar-fill"></div></div>
             <div class="photo-grid" id="photo-grid"></div>
         </div>
 
-        <div class="section-title">Diskografi</div>
+        <div class="section-title">Discography</div>
         <div class="album-grid">
             <a href="https://open.spotify.com/album/1xNzac76pyGW65UbQ15Jpn?si=SXYm90pgRDaFlPTY41YucA" target="_blank" class="album-card">
-                <div class="album-img"><img src="6ep.jpg" alt="6EP"></div>
-                <div class="album-info"><span class="album-name">6EP</span><span class="album-date">7 ŞUBAT 2025</span></div>
+                <div class="album-img" style="height:180px; background:#111;"><img src="6ep.jpg" style="width:100%; height:100%; object-fit:cover;"></div>
+                <div class="album-info"><span class="album-name">6EP</span><span class="album-date">2025</span></div>
             </a>
             <a href="https://open.spotify.com/album/1zkZPiKRqqVJPKIqap3SU8?si=kK3mFMXbSSmmwWDCJx0bAw" target="_blank" class="album-card">
-                <div class="album-img"><img src="ikarus.jpg" alt="IKARUS"></div>
-                <div class="album-info"><span class="album-name">IKARUS</span><span class="album-date">10 MAYIS 2024</span></div>
+                <div class="album-img" style="height:180px; background:#111;"><img src="ikarus.jpg" style="width:100%; height:100%; object-fit:cover;"></div>
+                <div class="album-info"><span class="album-name">IKARUS</span><span class="album-date">2024</span></div>
             </a>
             <a href="https://open.spotify.com/album/5wDw71G6My66IurTcLbULV?si=OW6vcMAIR7up82COdhEkeA" target="_blank" class="album-card">
-                <div class="album-img"><img src="dss.jpg" alt="DSS"></div>
-                <div class="album-info"><span class="album-name">DSS (DELUXE)</span><span class="album-date">8 TEMMUZ 2022</span></div>
+                <div class="album-img" style="height:180px; background:#111;"><img src="dss.jpg" style="width:100%; height:100%; object-fit:cover;"></div>
+                <div class="album-info"><span class="album-name">DSS</span><span class="album-date">2022</span></div>
             </a>
             <a href="https://open.spotify.com/album/6cWS5yrVFflrNt7o7eWgqx?si=rjootJ2_TKmCGQRkaDdSpg" target="_blank" class="album-card">
-                <div class="album-img"><img src="666.jpg" alt="666"></div>
-                <div class="album-info"><span class="album-name">666</span><span class="album-date">22 EKİM 2020</span></div>
-            </a>
-            <a href="https://open.spotify.com/album/2q7QzY8q8OVxa5sAyyl8OF?si=hce-O0Q7RWOGrh83tt5HFA" target="_blank" class="album-card">
-                <div class="album-img"><img src="deev.jpg" alt="DEEV"></div>
-                <div class="album-info"><span class="album-name">DEEV</span><span class="album-date">20 ŞUBAT 2016</span></div>
+                <div class="album-img" style="height:180px; background:#111;"><img src="666.jpg" style="width:100%; height:100%; object-fit:cover;"></div>
+                <div class="album-info"><span class="album-name">666</span><span class="album-date">2020</span></div>
             </a>
         </div>
 
-        <div class="social-btns">
+        <div class="social-btns" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px;">
             <a href="https://open.spotify.com/intl-tr/artist/0FUsrstJwmg4WVHQMTYuUA" target="_blank" class="btn btn-spotify">SPOTIFY</a>
             <a href="https://www.instagram.com/sehinsah/" target="_blank" class="btn btn-insta">INSTAGRAM</a>
         </div>
 
         <div class="sig">
-            DESIGNED FOR THE LEGEND BY <br>
-            <a href="https://www.instagram.com/on_r19/" target="_blank">ONUR TERYAKİOĞLU</a>
+            DESIGNED BY <a href="https://www.instagram.com/on_r19/" target="_blank">ONUR TERYAKİOĞLU</a>
         </div>
     </main>
 
     <script>
         const maxGoal = 100;
         const bdayDate = new Date('1986-12-27T00:00:00');
-        const albums = ["6EP", "IKARUS", "DSS", "666", "DEEV", "KARMA", "İSTİLA", "RRR!", "HAREMEYNALAMUT", "HIPHOP OKULU"];
+        const albums = ["6EP", "IKARUS", "DSS", "666", "DEEV", "KARMA", "İSTİLA", "RRR!", "HAREMEYNALAMUT", "HIPHOP OKULU", "ATLAS", "AUTOPILOT"];
         const extensions = ['jpg', 'jpeg', 'png', 'webp'];
         let foundCount = 0;
 
         function init() {
-            const flow = document.getElementById('flow');
-            for(let i=0; i<10; i++) {
-                const line = document.createElement('div');
-                line.className = 'flow-line';
-                line.innerText = (albums.join("  /  ") + "  /  ").repeat(5);
-                line.style.animationDuration = (40 + Math.random() * 40) + 's';
-                flow.appendChild(line);
-            }
-
+            createFallingText();
+            
             setInterval(() => {
                 const now = new Date();
                 const age = (now - bdayDate) / (1000 * 60 * 60 * 24 * 365.25);
@@ -226,8 +210,35 @@
             startImageScanning();
         }
 
+        function createFallingText() {
+            const container = document.getElementById('matrix-bg');
+            const total = 25;
+            
+            for(let i=0; i<total; i++) {
+                const text = document.createElement('div');
+                text.className = 'falling-text';
+                text.innerText = albums[Math.floor(Math.random() * albums.length)];
+                text.style.left = Math.random() * 100 + 'vw';
+                text.style.top = Math.random() * 100 + 'vh';
+                text.style.animation = `fall ${Math.random() * 10 + 5}s linear infinite`;
+                text.style.fontSize = (Math.random() * 1 + 0.5) + 'rem';
+                container.appendChild(text);
+            }
+        }
+
+        // CSS animation'ı JS ile ekle
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes fall {
+                0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+                10% { opacity: 0.15; }
+                90% { opacity: 0.15; }
+                100% { transform: translateY(100vh) rotate(10deg); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
         async function startImageScanning() {
-            const grid = document.getElementById('photo-grid');
             for (let i = 1; i <= 20; i++) {
                 tryExtension(i, 0);
             }
@@ -236,8 +247,7 @@
         function tryExtension(index, extIndex) {
             if (extIndex >= extensions.length) return;
             const img = new Image();
-            const ext = extensions[extIndex];
-            img.src = `${index}.${ext}?v=${new Date().getTime()}`;
+            img.src = `${index}.${extensions[extIndex]}?v=${new Date().getTime()}`;
             img.onload = function() {
                 foundCount++;
                 const slot = document.createElement('div');
@@ -247,25 +257,22 @@
                 document.getElementById('photo-grid').appendChild(slot);
                 updateProgress();
             };
-            img.onerror = function() {
-                tryExtension(index, extIndex + 1);
-            };
+            img.onerror = () => tryExtension(index, extIndex + 1);
         }
 
         function updateProgress() {
-            const fill = document.getElementById('bar-fill');
-            const label = document.getElementById('count-label');
-            fill.style.width = (foundCount / maxGoal) * 100 + '%';
-            label.innerText = `${foundCount} / ${maxGoal}`;
+            document.getElementById('bar-fill').style.width = (foundCount / maxGoal) * 100 + '%';
+            document.getElementById('count-label').innerText = `${foundCount} / ${maxGoal}`;
         }
 
         function reveal() {
-            document.getElementById('intro').style.transform = 'translateY(-100%)';
-            document.getElementById('intro').style.opacity = '0';
+            const intro = document.getElementById('intro');
+            intro.style.transform = 'translateY(-100%) scale(1.1)';
+            intro.style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('main').style.opacity = '1';
-                document.getElementById('main').style.transform = 'translateY(0)';
-            }, 500);
+                document.getElementById('main').style.transform = 'scale(1)';
+            }, 600);
         }
     </script>
 </body>
