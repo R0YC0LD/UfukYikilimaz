@@ -16,14 +16,13 @@
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-        /* --- YENİ NESİL SADE & ŞIK INTRO --- */
+        /* --- SADE & ŞIK INTRO --- */
         #intro {
             position: fixed; inset: 0; background: #000; 
             display: flex; justify-content: center; align-items: center; z-index: 2000;
             transition: all 1s cubic-bezier(0.85, 0, 0.15, 1); cursor: pointer;
         }
 
-        /* Arka plandaki hafif pembe aura */
         .intro-glow {
             position: absolute; width: 300px; height: 300px;
             background: var(--shn-pink); border-radius: 50%;
@@ -33,10 +32,7 @@
 
         @keyframes auraPulse { 0%, 100% { opacity: 0.1; transform: scale(1); } 50% { opacity: 0.25; transform: scale(1.2); } }
 
-        .karma-container {
-            position: relative; z-index: 10; text-align: center;
-        }
-
+        .karma-container { position: relative; z-index: 10; text-align: center; }
         .karma-img {
             width: 220px;
             filter: drop-shadow(0 0 10px rgba(255, 0, 127, 0.2));
@@ -91,6 +87,8 @@
 
         .album-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .album-card { background: var(--card-bg); border-radius: 15px; overflow: hidden; border: 1px solid #151515; text-decoration: none; transition: 0.3s; }
+        .album-img { width: 100%; aspect-ratio: 1; background: #111; }
+        .album-img img { width: 100%; height: 100%; object-fit: cover; }
         .album-info { padding: 12px; }
         .album-name { font-size: 0.8rem; font-weight: 700; color: #fff; display: block; }
         .album-date { font-size: 0.6rem; color: var(--secondary); font-family: 'Space Mono'; }
@@ -125,9 +123,11 @@
             <p style="font-size:0.7rem; color:var(--shn-pink); font-family:'Space Mono'; letter-spacing: 2px; font-weight: bold;">AUTHENTICATED ACCESS</p>
             
             <div class="info-card">
-                <div class="info-item"><span class="info-label">AKA</span><span class="info-value">HSNSBBH</span></div>
-                <div class="info-item"><span class="info-label">DOĞUM</span><span class="info-value">27.12.1986 (Erzincan)</span></div>
-                <div class="info-item"><span class="info-label">MESLEK</span><span class="info-value">Artist, Producer, Editor</span></div>
+                <div class="info-item"><span class="info-label">AKA</span><span class="info-value">HSNSBBH / ŞEHİNŞAH</span></div>
+                <div class="info-item"><span class="info-label">DOĞUM</span><span class="info-value">27.12.1986 (Kemah, Erzincan)</span></div>
+                <div class="info-item"><span class="info-label">TARZ</span><span class="info-value">Hip hop, Trap, Baile Funk</span></div>
+                <div class="info-item"><span class="info-label">MESLEK</span><span class="info-value">Müzisyen, Söz Yazarı, Film Yapımcısı, Editör</span></div>
+                <div class="info-item"><span class="info-label">ETKİN</span><span class="info-value">2002 - Günümüz</span></div>
                 <div class="info-item"><span class="info-label">LABEL</span><span class="info-value">Karma Company</span></div>
             </div>
         </div>
@@ -147,23 +147,27 @@
             <div class="photo-grid" id="photo-grid"></div>
         </div>
 
-        <div class="section-title">Discography</div>
+        <div class="section-title">Diskografi</div>
         <div class="album-grid">
             <a href="https://open.spotify.com/album/1xNzac76pyGW65UbQ15Jpn?si=SXYm90pgRDaFlPTY41YucA" target="_blank" class="album-card">
-                <div style="height:160px; background:#111;"><img src="6ep.jpg" style="width:100%; height:100%; object-fit:cover;"></div>
+                <div class="album-img"><img src="6ep.jpg" alt="6EP"></div>
                 <div class="album-info"><span class="album-name">6EP</span><span class="album-date">2025</span></div>
             </a>
             <a href="https://open.spotify.com/album/1zkZPiKRqqVJPKIqap3SU8?si=kK3mFMXbSSmmwWDCJx0bAw" target="_blank" class="album-card">
-                <div style="height:160px; background:#111;"><img src="ikarus.jpg" style="width:100%; height:100%; object-fit:cover;"></div>
+                <div class="album-img"><img src="ikarus.jpg" alt="IKARUS"></div>
                 <div class="album-info"><span class="album-name">IKARUS</span><span class="album-date">2024</span></div>
             </a>
             <a href="https://open.spotify.com/album/5wDw71G6My66IurTcLbULV?si=OW6vcMAIR7up82COdhEkeA" target="_blank" class="album-card">
-                <div style="height:160px; background:#111;"><img src="dss.jpg" style="width:100%; height:100%; object-fit:cover;"></div>
+                <div class="album-img"><img src="dss.jpg" alt="DSS"></div>
                 <div class="album-info"><span class="album-name">DSS</span><span class="album-date">2022</span></div>
             </a>
             <a href="https://open.spotify.com/album/6cWS5yrVFflrNt7o7eWgqx?si=rjootJ2_TKmCGQRkaDdSpg" target="_blank" class="album-card">
-                <div style="height:160px; background:#111;"><img src="666.jpg" style="width:100%; height:100%; object-fit:cover;"></div>
+                <div class="album-img"><img src="666.jpg" alt="666"></div>
                 <div class="album-info"><span class="album-name">666</span><span class="album-date">2020</span></div>
+            </a>
+            <a href="https://open.spotify.com/album/2q7QzY8q8OVxa5sAyyl8OF?si=hce-O0Q7RWOGrh83tt5HFA" target="_blank" class="album-card">
+                <div class="album-img"><img src="deev.jpg" alt="DEEV"></div>
+                <div class="album-info"><span class="album-name">DEEV</span><span class="album-date">2016</span></div>
             </a>
         </div>
 
@@ -199,7 +203,8 @@
         function checkExt(idx, eIdx) {
             if (eIdx >= exts.length) return;
             const img = new Image();
-            img.src = `${idx}.${exts[eIdx]}?v=${Date.now()}`;
+            const ext = exts[eIdx];
+            img.src = `${idx}.${ext}?v=${Date.now()}`;
             img.onload = () => {
                 found++;
                 const slot = document.createElement('div');
@@ -207,14 +212,17 @@
                 slot.style.display = 'block';
                 slot.appendChild(img);
                 document.getElementById('photo-grid').appendChild(slot);
-                document.getElementById('bar-fill').style.width = (found / 100 * 100) + '%';
-                document.getElementById('count-label').innerText = `${found} / 100`;
+                updateProgress();
             };
             img.onerror = () => checkExt(idx, eIdx + 1);
         }
 
+        function updateProgress() {
+            document.getElementById('bar-fill').style.width = (found / 100 * 100) + '%';
+            document.getElementById('count-label').innerText = `${found} / 100`;
+        }
+
         function reveal() {
-            // MÜZİĞİ BAŞLAT
             const beat = document.getElementById('myBeat');
             beat.play().catch(e => console.log("Audio play error:", e));
 
