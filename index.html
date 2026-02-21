@@ -9,121 +9,110 @@
         :root {
             --bg: #030303;
             --card-bg: #0a0a0a;
-            --accent: #ffffff;
-            --shn-pink: #ff007f; /* İkonik Şehinşah Pembesi */
-            --shn-red: #ff003c;
+            --shn-pink: #ff007f;
             --secondary: #444;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--bg); color: var(--accent); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        body { background-color: var(--bg); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-        /* --- SİNEMATİK DİNAMİK INTRO --- */
+        /* --- YENİ NESİL SADE & ŞIK INTRO --- */
         #intro {
-            position: fixed; inset: 0; background: radial-gradient(circle at center, #1a000d 0%, #000 100%); 
+            position: fixed; inset: 0; background: #000; 
             display: flex; justify-content: center; align-items: center; z-index: 2000;
-            transition: all 1.2s cubic-bezier(0.9, 0, 0.1, 1); overflow: hidden; cursor: pointer;
+            transition: all 1s cubic-bezier(0.85, 0, 0.15, 1); cursor: pointer;
         }
 
-        .falling-text {
-            position: absolute; font-family: 'Syncopate'; font-size: 1.2rem;
-            color: var(--shn-pink); opacity: 0.15; white-space: nowrap;
-            pointer-events: none; user-select: none; z-index: 1;
-            filter: blur(1px); transition: opacity 0.5s;
+        /* Arka plandaki hafif pembe aura */
+        .intro-glow {
+            position: absolute; width: 300px; height: 300px;
+            background: var(--shn-pink); border-radius: 50%;
+            filter: blur(120px); opacity: 0.15;
+            animation: auraPulse 4s infinite ease-in-out;
         }
+
+        @keyframes auraPulse { 0%, 100% { opacity: 0.1; transform: scale(1); } 50% { opacity: 0.25; transform: scale(1.2); } }
 
         .karma-container {
-            position: relative; z-index: 10;
-            display: flex; flex-direction: column; align-items: center;
-            background: rgba(0,0,0,0.4); padding: 40px; border-radius: 50%;
-            backdrop-filter: blur(10px); box-shadow: 0 0 100px rgba(255, 0, 127, 0.1);
+            position: relative; z-index: 10; text-align: center;
         }
 
         .karma-img {
-            width: 280px;
-            animation: breatheImg 3s infinite ease-in-out;
-            filter: drop-shadow(0 0 30px rgba(255, 0, 127, 0.4));
+            width: 220px;
+            filter: drop-shadow(0 0 10px rgba(255, 0, 127, 0.2));
+            animation: logoFloat 3s infinite ease-in-out;
         }
 
-        @keyframes breatheImg {
-            0%, 100% { opacity: 0.7; transform: scale(0.95); filter: hue-rotate(0deg) drop-shadow(0 0 20px var(--shn-pink)); }
-            50% { opacity: 1; transform: scale(1.05); filter: hue-rotate(15deg) drop-shadow(0 0 50px var(--shn-pink)); }
-        }
+        @keyframes logoFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-        .tap-indication {
-            margin-top: 25px; font-family: 'Space Mono'; font-size: 0.7rem;
-            letter-spacing: 8px; color: var(--shn-pink); font-weight: bold;
-            animation: blink 1.5s infinite; text-shadow: 0 0 10px var(--shn-pink);
+        .enter-text {
+            margin-top: 40px; font-family: 'Space Mono'; font-size: 0.6rem;
+            letter-spacing: 10px; color: var(--shn-pink); font-weight: 700;
+            text-transform: uppercase; opacity: 0.6;
         }
-        @keyframes blink { 50% { opacity: 0.2; transform: scale(0.9); } }
 
         /* --- ANA İÇERİK --- */
-        main { padding: 25px; max-width: 500px; margin: 0 auto; opacity: 0; transform: scale(0.9); transition: 1.5s cubic-bezier(0.2, 0, 0.2, 1); padding-bottom: 80px; }
+        main { padding: 25px; max-width: 500px; margin: 0 auto; opacity: 0; transform: translateY(20px); transition: 1.2s ease-out; padding-bottom: 80px; }
 
-        .profile-section { text-align: center; margin: 40px 0 20px; }
+        .profile-section { text-align: center; margin-top: 20px; }
         .pp-container {
-            width: 150px; height: 150px; border-radius: 50%; margin: 0 auto 20px;
-            border: 3px solid var(--shn-pink); overflow: hidden; background: #111;
-            box-shadow: 0 0 40px rgba(255, 0, 127, 0.3);
+            width: 130px; height: 130px; border-radius: 50%; margin: 0 auto 20px;
+            border: 2px solid var(--shn-pink); overflow: hidden;
+            box-shadow: 0 0 30px rgba(255, 0, 127, 0.2);
         }
         .pp-container img { width: 100%; height: 100%; object-fit: cover; }
-        .shn-name { font-size: 2.2rem; font-weight: 700; letter-spacing: -2px; font-family: 'Syncopate'; color: var(--accent); }
+        
+        .shn-name { font-size: 2rem; font-weight: 700; letter-spacing: -1px; font-family: 'Syncopate'; }
 
         .info-card {
-            background: rgba(255, 0, 127, 0.03); border: 1px solid rgba(255, 0, 127, 0.15);
-            border-radius: 20px; padding: 20px; margin-bottom: 25px; text-align: left;
-            backdrop-filter: blur(5px);
+            background: rgba(255, 0, 127, 0.03); border: 1px solid rgba(255, 0, 127, 0.1);
+            border-radius: 20px; padding: 20px; margin: 25px 0; text-align: left;
         }
-        .info-item { margin-bottom: 10px; font-size: 0.75rem; border-bottom: 1px solid rgba(255,0,127,0.05); padding-bottom: 8px; }
-        .info-item:last-child { border: none; }
-        .info-label { color: var(--shn-pink); font-family: 'Space Mono'; font-weight: bold; width: 100px; display: inline-block; text-shadow: 0 0 5px rgba(255,0,127,0.5); }
-        .info-value { color: #eee; font-weight: 300; }
+        .info-item { margin-bottom: 10px; font-size: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; }
+        .info-label { color: var(--shn-pink); font-family: 'Space Mono'; font-weight: bold; width: 90px; display: inline-block; }
+        .info-value { color: #ccc; }
 
         .section-title {
-            font-family: 'Space Mono'; font-size: 0.75rem; color: var(--shn-pink);
-            text-transform: uppercase; letter-spacing: 4px; margin: 35px 0 15px 0;
-            display: flex; align-items: center; gap: 15px;
+            font-family: 'Space Mono'; font-size: 0.7rem; color: var(--shn-pink);
+            text-transform: uppercase; letter-spacing: 4px; margin: 30px 0 15px 0;
+            display: flex; align-items: center; gap: 10px;
         }
-        .section-title::after { content: ""; flex: 1; height: 1px; background: linear-gradient(to right, var(--shn-pink), transparent); opacity: 0.3; }
+        .section-title::after { content: ""; flex: 1; height: 1px; background: #222; }
 
-        .life-cycle-card {
-            background: #080808; border: 1px solid #1a1a1a; padding: 25px; border-radius: 25px; margin-bottom: 25px; text-align: center;
-            box-shadow: inset 0 0 20px rgba(255, 0, 127, 0.02);
-        }
-        #age-timer { font-family: 'Space Mono'; font-size: 1.5rem; font-weight: 700; color: var(--shn-pink); text-shadow: 0 0 15px rgba(255,0,127,0.4); }
+        #age-timer { font-family: 'Space Mono'; font-size: 1.4rem; font-weight: 700; color: var(--shn-pink); text-shadow: 0 0 10px rgba(255,0,127,0.3); }
 
-        .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 20px; }
-        .photo-slot { aspect-ratio: 1; background: #080808; border-radius: 15px; overflow: hidden; border: 1px solid #1a1a1a; display: none; transition: 0.3s; }
-        .photo-slot:hover { border-color: var(--shn-pink); transform: scale(1.05); }
+        .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
+        .photo-slot { aspect-ratio: 1; background: #080808; border-radius: 12px; overflow: hidden; border: 1px solid #1a1a1a; display: none; }
+        .photo-slot img { width: 100%; height: 100%; object-fit: cover; }
 
-        .progress-container { background: var(--card-bg); padding: 20px; border-radius: 25px; border: 1px solid #1a1a1a; }
-        .bar-bg { width: 100%; height: 8px; background: #111; border-radius: 10px; margin-top: 15px; overflow: hidden; }
-        #bar-fill { height: 100%; width: 0%; background: var(--shn-pink); box-shadow: 0 0 20px var(--shn-pink); border-radius: 10px; transition: 2.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .progress-container { background: var(--card-bg); padding: 15px; border-radius: 20px; border: 1px solid #1a1a1a; }
+        .bar-bg { width: 100%; height: 6px; background: #111; border-radius: 10px; margin-top: 10px; overflow: hidden; }
+        #bar-fill { height: 100%; width: 0%; background: var(--shn-pink); box-shadow: 0 0 15px var(--shn-pink); transition: 2s ease-out; }
 
-        .album-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .album-card { background: var(--card-bg); border-radius: 20px; overflow: hidden; border: 1px solid #1a1a1a; text-decoration: none; transition: 0.5s; }
-        .album-card:hover { border-color: var(--shn-pink); transform: translateY(-8px); box-shadow: 0 10px 30px rgba(255, 0, 127, 0.1); }
-        .album-info { padding: 15px; }
-        .album-name { font-size: 0.85rem; font-weight: 700; color: #fff; display: block; margin-bottom: 5px; }
-        .album-date { font-size: 0.65rem; color: var(--secondary); font-family: 'Space Mono'; }
+        .album-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .album-card { background: var(--card-bg); border-radius: 15px; overflow: hidden; border: 1px solid #151515; text-decoration: none; transition: 0.3s; }
+        .album-info { padding: 12px; }
+        .album-name { font-size: 0.8rem; font-weight: 700; color: #fff; display: block; }
+        .album-date { font-size: 0.6rem; color: var(--secondary); font-family: 'Space Mono'; }
 
-        .btn { padding: 18px; border-radius: 20px; text-align: center; font-size: 0.85rem; font-weight: 700; text-decoration: none; transition: 0.4s; border: 1px solid transparent; }
+        .social-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 25px; }
+        .btn { padding: 15px; border-radius: 15px; text-align: center; font-size: 0.8rem; font-weight: 700; text-decoration: none; transition: 0.3s; }
         .btn-spotify { background: #1DB954; color: white; }
-        .btn-insta { background: transparent; color: var(--shn-pink); border-color: var(--shn-pink); }
-        .btn:hover { filter: brightness(1.2); transform: scale(1.02); }
+        .btn-insta { background: transparent; color: var(--shn-pink); border: 1px solid var(--shn-pink); }
 
-        .sig { margin-top: 70px; text-align: center; font-size: 0.7rem; color: #333; font-family: 'Space Mono'; letter-spacing: 2px; }
-        .sig a { color: var(--shn-pink); text-decoration: none; font-weight: 700; transition: 0.3s; opacity: 0.6; }
-        .sig a:hover { opacity: 1; text-shadow: 0 0 10px var(--shn-pink); }
+        .sig { margin-top: 50px; text-align: center; font-size: 0.65rem; color: #333; font-family: 'Space Mono'; }
+        .sig a { color: var(--shn-pink); text-decoration: none; opacity: 0.6; }
     </style>
 </head>
 <body onload="init()">
 
+    <audio id="myBeat" src="beat.mp3" loop></audio>
+
     <div id="intro" onclick="reveal()">
-        <div id="matrix-bg"></div>
+        <div class="intro-glow"></div>
         <div class="karma-container">
             <img src="karma.png" class="karma-img" alt="KARMA">
-            <div class="tap-indication">UNIVERSE CONNECTING</div>
+            <div class="enter-text">Tap to Access</div>
         </div>
     </div>
 
@@ -133,28 +122,25 @@
                 <img src="sehinsah.jpg" alt="Şehinşah">
             </div>
             <h1 class="shn-name">UFUK YIKILMAZ</h1>
-            <p style="font-size:0.8rem; color:var(--shn-pink); font-family:'Space Mono'; letter-spacing: 3px; margin-bottom: 25px; font-weight: bold;">PREMIUM AUTH // SHN</p>
+            <p style="font-size:0.7rem; color:var(--shn-pink); font-family:'Space Mono'; letter-spacing: 2px; font-weight: bold;">AUTHENTICATED ACCESS</p>
             
             <div class="info-card">
-                <div class="info-item"><span class="info-label">AKA</span><span class="info-value">HSNSBBH / ŞEHİNŞAH</span></div>
-                <div class="info-item"><span class="info-label">DOĞUM</span><span class="info-value">27.12.1986 (Kemah, Erzincan)</span></div>
-                <div class="info-item"><span class="info-label">TARZ</span><span class="info-value">Hip hop, Trap, Baile Funk</span></div>
-                <div class="info-item"><span class="info-label">MESLEK</span><span class="info-value">Müzisyen, Söz Yazarı, Prodüktör</span></div>
-                <div class="info-item"><span class="info-label">ETKİN</span><span class="info-value">2002 - Present</span></div>
+                <div class="info-item"><span class="info-label">AKA</span><span class="info-value">HSNSBBH</span></div>
+                <div class="info-item"><span class="info-label">DOĞUM</span><span class="info-value">27.12.1986 (Erzincan)</span></div>
+                <div class="info-item"><span class="info-label">MESLEK</span><span class="info-value">Artist, Producer, Editor</span></div>
                 <div class="info-item"><span class="info-label">LABEL</span><span class="info-value">Karma Company</span></div>
             </div>
         </div>
 
         <div class="section-title">Life Cycle</div>
-        <div class="life-cycle-card">
+        <div style="text-align: center; background: #080808; padding: 20px; border-radius: 20px; border: 1px solid #111;">
             <div id="age-timer">00.00000000</div>
-            <p style="font-size:0.6rem; color:var(--secondary); margin-top:10px; font-family:'Space Mono'; letter-spacing: 1px;">GENETIC STATUS: SUPERIOR</p>
         </div>
 
-        <div class="section-title">Archive Progress</div>
+        <div class="section-title">Collection Progress</div>
         <div class="progress-container">
-            <div style="display:flex; justify-content:space-between; font-size:0.75rem; font-family:'Space Mono'; font-weight: bold;">
-                <span style="color: var(--shn-pink);">COLLECTION DATA</span>
+            <div style="display:flex; justify-content:space-between; font-size:0.7rem; font-family:'Space Mono'">
+                <span>VAULT DATA</span>
                 <span id="count-label">0 / 100</span>
             </div>
             <div class="bar-bg"><div id="bar-fill"></div></div>
@@ -164,24 +150,24 @@
         <div class="section-title">Discography</div>
         <div class="album-grid">
             <a href="https://open.spotify.com/album/1xNzac76pyGW65UbQ15Jpn?si=SXYm90pgRDaFlPTY41YucA" target="_blank" class="album-card">
-                <div class="album-img" style="height:180px; background:#111;"><img src="6ep.jpg" style="width:100%; height:100%; object-fit:cover;"></div>
+                <div style="height:160px; background:#111;"><img src="6ep.jpg" style="width:100%; height:100%; object-fit:cover;"></div>
                 <div class="album-info"><span class="album-name">6EP</span><span class="album-date">2025</span></div>
             </a>
             <a href="https://open.spotify.com/album/1zkZPiKRqqVJPKIqap3SU8?si=kK3mFMXbSSmmwWDCJx0bAw" target="_blank" class="album-card">
-                <div class="album-img" style="height:180px; background:#111;"><img src="ikarus.jpg" style="width:100%; height:100%; object-fit:cover;"></div>
+                <div style="height:160px; background:#111;"><img src="ikarus.jpg" style="width:100%; height:100%; object-fit:cover;"></div>
                 <div class="album-info"><span class="album-name">IKARUS</span><span class="album-date">2024</span></div>
             </a>
             <a href="https://open.spotify.com/album/5wDw71G6My66IurTcLbULV?si=OW6vcMAIR7up82COdhEkeA" target="_blank" class="album-card">
-                <div class="album-img" style="height:180px; background:#111;"><img src="dss.jpg" style="width:100%; height:100%; object-fit:cover;"></div>
+                <div style="height:160px; background:#111;"><img src="dss.jpg" style="width:100%; height:100%; object-fit:cover;"></div>
                 <div class="album-info"><span class="album-name">DSS</span><span class="album-date">2022</span></div>
             </a>
             <a href="https://open.spotify.com/album/6cWS5yrVFflrNt7o7eWgqx?si=rjootJ2_TKmCGQRkaDdSpg" target="_blank" class="album-card">
-                <div class="album-img" style="height:180px; background:#111;"><img src="666.jpg" style="width:100%; height:100%; object-fit:cover;"></div>
+                <div style="height:160px; background:#111;"><img src="666.jpg" style="width:100%; height:100%; object-fit:cover;"></div>
                 <div class="album-info"><span class="album-name">666</span><span class="album-date">2020</span></div>
             </a>
         </div>
 
-        <div class="social-btns" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px;">
+        <div class="social-btns">
             <a href="https://open.spotify.com/intl-tr/artist/0FUsrstJwmg4WVHQMTYuUA" target="_blank" class="btn btn-spotify">SPOTIFY</a>
             <a href="https://www.instagram.com/sehinsah/" target="_blank" class="btn btn-insta">INSTAGRAM</a>
         </div>
@@ -192,86 +178,52 @@
     </main>
 
     <script>
-        const maxGoal = 100;
-        const bdayDate = new Date('1986-12-27T00:00:00');
-        const albums = ["6EP", "IKARUS", "DSS", "666", "DEEV", "KARMA", "İSTİLA", "RRR!", "HAREMEYNALAMUT", "HIPHOP OKULU", "ATLAS", "AUTOPILOT"];
-        const extensions = ['jpg', 'jpeg', 'png', 'webp'];
-        let foundCount = 0;
+        const bday = new Date('1986-12-27T00:00:00');
+        const exts = ['jpg', 'png', 'webp', 'jpeg'];
+        let found = 0;
 
         function init() {
-            createFallingText();
-            
             setInterval(() => {
-                const now = new Date();
-                const age = (now - bdayDate) / (1000 * 60 * 60 * 24 * 365.25);
+                const age = (new Date() - bday) / (1000 * 60 * 60 * 24 * 365.25);
                 document.getElementById('age-timer').innerText = age.toFixed(9);
             }, 100);
-
-            startImageScanning();
+            scanImages();
         }
 
-        function createFallingText() {
-            const container = document.getElementById('matrix-bg');
-            const total = 25;
-            
-            for(let i=0; i<total; i++) {
-                const text = document.createElement('div');
-                text.className = 'falling-text';
-                text.innerText = albums[Math.floor(Math.random() * albums.length)];
-                text.style.left = Math.random() * 100 + 'vw';
-                text.style.top = Math.random() * 100 + 'vh';
-                text.style.animation = `fall ${Math.random() * 10 + 5}s linear infinite`;
-                text.style.fontSize = (Math.random() * 1 + 0.5) + 'rem';
-                container.appendChild(text);
-            }
-        }
-
-        // CSS animation'ı JS ile ekle
-        const style = document.createElement('style');
-        style.innerHTML = `
-            @keyframes fall {
-                0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
-                10% { opacity: 0.15; }
-                90% { opacity: 0.15; }
-                100% { transform: translateY(100vh) rotate(10deg); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
-
-        async function startImageScanning() {
+        function scanImages() {
             for (let i = 1; i <= 20; i++) {
-                tryExtension(i, 0);
+                checkExt(i, 0);
             }
         }
 
-        function tryExtension(index, extIndex) {
-            if (extIndex >= extensions.length) return;
+        function checkExt(idx, eIdx) {
+            if (eIdx >= exts.length) return;
             const img = new Image();
-            img.src = `${index}.${extensions[extIndex]}?v=${new Date().getTime()}`;
-            img.onload = function() {
-                foundCount++;
+            img.src = `${idx}.${exts[eIdx]}?v=${Date.now()}`;
+            img.onload = () => {
+                found++;
                 const slot = document.createElement('div');
                 slot.className = 'photo-slot';
                 slot.style.display = 'block';
                 slot.appendChild(img);
                 document.getElementById('photo-grid').appendChild(slot);
-                updateProgress();
+                document.getElementById('bar-fill').style.width = (found / 100 * 100) + '%';
+                document.getElementById('count-label').innerText = `${found} / 100`;
             };
-            img.onerror = () => tryExtension(index, extIndex + 1);
-        }
-
-        function updateProgress() {
-            document.getElementById('bar-fill').style.width = (foundCount / maxGoal) * 100 + '%';
-            document.getElementById('count-label').innerText = `${foundCount} / ${maxGoal}`;
+            img.onerror = () => checkExt(idx, eIdx + 1);
         }
 
         function reveal() {
+            // MÜZİĞİ BAŞLAT
+            const beat = document.getElementById('myBeat');
+            beat.play().catch(e => console.log("Audio play error:", e));
+
             const intro = document.getElementById('intro');
-            intro.style.transform = 'translateY(-100%) scale(1.1)';
-            intro.style.opacity = '0';
+            intro.style.transform = 'translateY(-100%)';
             setTimeout(() => {
+                intro.style.display = 'none';
                 document.getElementById('main').style.opacity = '1';
-                document.getElementById('main').style.transform = 'scale(1)';
+                document.getElementById('main').style.transform = 'translateY(0)';
             }, 600);
         }
     </script>
