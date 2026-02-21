@@ -49,7 +49,6 @@
         .karma-img {
             width: 260px;
             animation: breatheImg 4s infinite ease-in-out;
-            filter: drop-shadow(0 0 20px rgba(255,0,61,0.2));
         }
 
         @keyframes breatheImg {
@@ -75,19 +74,6 @@
         .pp-container img { width: 100%; height: 100%; object-fit: cover; }
         .shn-name { font-size: 2.2rem; font-weight: 700; letter-spacing: -2px; font-family: 'Syncopate'; }
 
-        /* Yaşam Sayacı */
-        .life-cycle-card {
-            background: #080808; border: 1px solid #151515; padding: 20px; border-radius: 20px; margin-bottom: 25px; text-align: center;
-        }
-        #age-timer { font-family: 'Space Mono'; font-size: 1.4rem; font-weight: 700; color: var(--shn-red); }
-        
-        #bday-msg {
-            display: none; background: var(--shn-red); color: white; padding: 15px;
-            border-radius: 15px; font-size: 0.8rem; font-weight: 700; margin-bottom: 25px;
-            text-align: center; animation: pulseRed 2s infinite;
-        }
-        @keyframes pulseRed { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
-
         .section-title {
             font-family: 'Space Mono'; font-size: 0.75rem; color: var(--shn-red);
             text-transform: uppercase; letter-spacing: 4px; margin: 35px 0 15px 0;
@@ -95,35 +81,34 @@
         }
         .section-title::after { content: ""; flex: 1; height: 1px; background: #1a1a1a; }
 
-        /* Foto Grid */
+        .life-cycle-card {
+            background: #080808; border: 1px solid #151515; padding: 20px; border-radius: 20px; margin-bottom: 25px; text-align: center;
+        }
+        #age-timer { font-family: 'Space Mono'; font-size: 1.4rem; font-weight: 700; color: var(--shn-red); }
+
         .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
         .photo-slot { aspect-ratio: 1; background: #080808; border-radius: 12px; overflow: hidden; border: 1px solid #151515; display: none; }
         .photo-slot img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Diskografi Kronolojik */
+        .progress-container { background: var(--card-bg); padding: 20px; border-radius: 20px; border: 1px solid #151515; }
+        .bar-bg { width: 100%; height: 6px; background: #111; border-radius: 10px; margin-top: 12px; overflow: hidden; }
+        #bar-fill { height: 100%; width: 0%; background: #fff; box-shadow: 0 0 15px #fff; border-radius: 10px; transition: 2s cubic-bezier(0.4, 0, 0.2, 1); }
+
         .album-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .album-card { background: var(--card-bg); border-radius: 15px; overflow: hidden; border: 1px solid #151515; text-decoration: none; transition: 0.4s; }
-        .album-card:hover { border-color: var(--shn-red); transform: translateY(-5px); }
-        .album-img { width: 100%; aspect-ratio: 1; background: #111; position: relative; }
+        .album-img { width: 100%; aspect-ratio: 1; background: #111; }
         .album-img img { width: 100%; height: 100%; object-fit: cover; }
         .album-info { padding: 12px; }
         .album-name { font-size: 0.8rem; font-weight: 700; color: #fff; display: block; }
         .album-date { font-size: 0.6rem; color: var(--secondary); font-family: 'Space Mono'; }
 
-        /* Progress */
-        .progress-container { background: var(--card-bg); padding: 20px; border-radius: 20px; border: 1px solid #151515; }
-        .bar-bg { width: 100%; height: 6px; background: #111; border-radius: 10px; margin-top: 12px; overflow: hidden; }
-        #bar-fill { height: 100%; width: 0%; background: #fff; box-shadow: 0 0 15px #fff; border-radius: 10px; transition: 2s cubic-bezier(0.4, 0, 0.2, 1); }
-
-        /* Signature */
-        .sig { margin-top: 60px; text-align: center; font-size: 0.65rem; color: #333; font-family: 'Space Mono'; }
-        .sig a { color: #666; text-decoration: none; font-weight: 700; border-bottom: 1px solid transparent; transition: 0.3s; }
-        .sig a:hover { color: var(--shn-red); border-color: var(--shn-red); }
-
         .social-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
         .btn { padding: 16px; border-radius: 15px; text-align: center; font-size: 0.8rem; font-weight: 700; text-decoration: none; transition: 0.3s; }
         .btn-spotify { background: #1DB954; color: white; }
         .btn-insta { background: #fff; color: #000; }
+
+        .sig { margin-top: 60px; text-align: center; font-size: 0.65rem; color: #333; font-family: 'Space Mono'; }
+        .sig a { color: #666; text-decoration: none; font-weight: 700; transition: 0.3s; }
     </style>
 </head>
 <body onload="init()">
@@ -137,11 +122,6 @@
     </div>
 
     <main id="main">
-        <div id="bday-msg">
-            👑 BUGÜN KRALIN DOĞUM GÜNÜ! <br> 
-            İYİ Kİ DOĞDUN UFUK YIKILMAZ. TÜRKÇE RAP'İN KARMA'SI SENSİN!
-        </div>
-
         <div class="profile-section">
             <div class="pp-container">
                 <img src="sehinsah.jpg" alt="Şehinşah">
@@ -204,10 +184,11 @@
     <script>
         const maxGoal = 100;
         const bdayDate = new Date('1986-12-27T00:00:00');
-        const albums = ["6EP", "IKARUS", "DSS", "666", "DEEV", "KARMA", "İSTİLA", "RRR!", "HAREMEYNALAMUT", "HIPHOP OKULU", "PİRHANE"];
+        const albums = ["6EP", "IKARUS", "DSS", "666", "DEEV", "KARMA", "İSTİLA", "RRR!", "HAREMEYNALAMUT", "HIPHOP OKULU"];
+        const extensions = ['jpg', 'jpeg', 'png', 'webp'];
+        let foundCount = 0;
 
         function init() {
-            // Intro Akışı - Daha Büyük ve Kaliteli
             const flow = document.getElementById('flow');
             for(let i=0; i<10; i++) {
                 const line = document.createElement('div');
@@ -217,48 +198,52 @@
                 flow.appendChild(line);
             }
 
-            // Yaşam Sayacı
             setInterval(() => {
                 const now = new Date();
-                const diff = now - bdayDate;
-                const age = diff / (1000 * 60 * 60 * 24 * 365.25);
+                const age = (now - bdayDate) / (1000 * 60 * 60 * 24 * 365.25);
                 document.getElementById('age-timer').innerText = age.toFixed(9);
-
-                if(now.getMonth() === 11 && now.getDate() === 27) {
-                    document.getElementById('bday-msg').style.display = 'block';
-                }
             }, 100);
 
-            // Fotoğrafları Algıla
-            autoDetectPhotos();
+            startImageScanning();
         }
 
-        async function autoDetectPhotos() {
+        async function startImageScanning() {
             const grid = document.getElementById('photo-grid');
-            let foundCount = 0;
-            
-            // 20 fotoğrafa kadar tarar, olanları gösterir
-            for(let i = 1; i <= 20; i++) {
-                const img = new Image();
-                img.src = `${i}.jpg`;
-                img.onload = function() {
-                    foundCount++;
-                    const slot = document.createElement('div');
-                    slot.className = 'photo-slot';
-                    slot.style.display = 'block';
-                    const clone = this.cloneNode(true);
-                    slot.appendChild(clone);
-                    grid.appendChild(slot);
-                    updateProgress(foundCount);
-                };
+            // 1'den 20'ye kadar tüm sayılar için tarama yap
+            for (let i = 1; i <= 20; i++) {
+                tryExtension(i, 0);
             }
         }
 
-        function updateProgress(count) {
+        function tryExtension(index, extIndex) {
+            if (extIndex >= extensions.length) return;
+
+            const img = new Image();
+            const ext = extensions[extIndex];
+            // Cache problemini aşmak için timestamp ekliyoruz
+            img.src = `${index}.${ext}?v=${new Date().getTime()}`;
+
+            img.onload = function() {
+                foundCount++;
+                const slot = document.createElement('div');
+                slot.className = 'photo-slot';
+                slot.style.display = 'block';
+                slot.appendChild(img);
+                document.getElementById('photo-grid').appendChild(slot);
+                updateProgress();
+            };
+
+            img.onerror = function() {
+                // Bu uzantı bulunamadıysa bir sonrakini dene
+                tryExtension(index, extIndex + 1);
+            };
+        }
+
+        function updateProgress() {
             const fill = document.getElementById('bar-fill');
             const label = document.getElementById('count-label');
-            fill.style.width = (count / maxGoal) * 100 + '%';
-            label.innerText = `${count} / ${maxGoal}`;
+            fill.style.width = (foundCount / maxGoal) * 100 + '%';
+            label.innerText = `${foundCount} / ${maxGoal}`;
         }
 
         function reveal() {
