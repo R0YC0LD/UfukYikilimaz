@@ -57,7 +57,6 @@
         /* --- PROFIL FOTOĞRAFI (SABİT GÖRÜNÜR + SMOOTH BEAT REACTION) --- */
         .profile-section { text-align: center; margin-top: 20px; position: relative; z-index: 10; }
         .pp-wrapper {
-            /* Fotoğraf büyüdüğünde yazının üstüne taşmasını engellemek için yükseklik sabitledik */
             height: 180px; 
             display: flex;
             justify-content: center;
@@ -70,11 +69,9 @@
             transform: scale(var(--beat-scale)); 
             box-shadow: 0 0 var(--beat-glow) var(--shn-pink);
             cursor: crosshair;
-            /* Performans ve smooth etki için will-change eklendi */
             will-change: transform, box-shadow;
             z-index: 20; 
         }
-        /* Resim her zaman full opak ve renkli */
         .pp-container img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
         
         .shn-name { font-size: 2.2rem; font-weight: 700; letter-spacing: -1px; font-family: 'Syncopate'; color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2); transition: 0.5s ease; position: relative; z-index: 5; }
@@ -90,10 +87,10 @@
 
         #age-timer { font-family: 'Space Mono'; font-size: 1.4rem; font-weight: 700; color: #222; transition: 0.5s; cursor: pointer; }
 
-        /* --- COLLECTION DATA (SABİT, 3D ETKİSİ YOK) --- */
+        /* --- COLLECTION DATA --- */
         .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
         .photo-slot { aspect-ratio: 1; background: #080808; border-radius: 12px; overflow: hidden; border: 1px solid #111; display: none; cursor: pointer; }
-        .photo-slot img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); opacity: 0.3; transition: filter 0.6s, opacity 0.6s, transform 0.3s; pointer-events: none;}
+        .photo-slot img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); opacity: 0.3; transition: filter 0.6s, opacity 0.6s, transform 0.3s; }
         .photo-slot:hover img { transform: scale(1.05); } 
 
         /* --- ALBÜM LİSTESİ VE 3D TILT EFEKTİ --- */
@@ -226,8 +223,8 @@
         </div>
 
         <div class="social-btns">
-            <a href="https://open.spotify.com/intl-tr/artist/0FUsrstJwmg4WVHQMTYuUA" target="_blank" class="btn glow-target tilt-card">SPOTIFY</a>
-            <a href="https://www.instagram.com/sehinsah/" target="_blank" class="btn glow-target tilt-card">INSTAGRAM</a>
+            <a href="https://open.spotify.com/intl-tr/artist/0FUsrstJwmg4WVHQMTYuUA" target="_blank" class="btn glow-target">SPOTIFY</a>
+            <a href="https://www.instagram.com/sehinsah/" target="_blank" class="btn glow-target">INSTAGRAM</a>
         </div>
 
         <div class="sig">
@@ -280,8 +277,7 @@
             // Sadece en düşük bas frekanslarına odaklan (Kick)
             let bassIntensity = (dataArray[0] + dataArray[1]) / 2;
             
-            if (bassIntensity > 160) { // Bas eşiği biraz yükseltildi, sadece sert vuruşlarda tepki versin
-                // Max %25 büyüme (Daha kontrollü) ve max 60px parlama
+            if (bassIntensity > 160) { 
                 targetScaleValue = 1 + ((bassIntensity - 160) / 95) * 0.25; 
                 targetGlowValue = ((bassIntensity - 160) / 95) * 60;
             } else {
@@ -289,12 +285,10 @@
                 targetGlowValue = 0;
             }
 
-            // LERP (Linear Interpolation) ile hareketi yumuşat
-            // 0.2 değeri ne kadar küçükse animasyon o kadar yumuşak olur, ne kadar büyükse o kadar keskin olur.
             currentScaleValue += (targetScaleValue - currentScaleValue) * 0.25;
             currentGlowValue += (targetGlowValue - currentGlowValue) * 0.25;
             
-            currentBeatScale = currentScaleValue; // Partiküller için
+            currentBeatScale = currentScaleValue; 
             
             document.documentElement.style.setProperty('--beat-scale', currentScaleValue);
             document.documentElement.style.setProperty('--beat-glow', `${currentGlowValue}px`);
@@ -409,7 +403,6 @@
             function draw() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 
-                // Hızı beat şiddetine göre (currentBeatScale) katla.
                 let speedMult = currentBeatScale > 1 ? 1 + ((currentBeatScale - 1) * 8) : 1; 
 
                 particles.forEach(p => {
@@ -421,7 +414,6 @@
                     if(p.y > canvas.height) p.y = 0;
 
                     ctx.beginPath();
-                    // Partiküller basla birlikte çok hafif şişsin
                     ctx.arc(p.x, p.y, p.radius * (currentBeatScale > 1.05 ? 1.5 : 1), 0, Math.PI * 2);
                     ctx.fillStyle = `rgba(255, 0, 127, ${p.alpha})`;
                     ctx.fill();
@@ -463,7 +455,6 @@
                 const elCenter = rect.top + (rect.height / 2);
                 const dist = Math.abs(elCenter - center);
 
-                // pp-container artık fenerden bağımsız
                 if(el.classList.contains('pp-container')) return; 
 
                 if (dist < 200) {
@@ -558,8 +549,10 @@
                 const slot = document.createElement('div');
                 slot.className = 'photo-slot'; 
                 slot.style.display = 'block';
-                // TIKLAYINCA BÜYÜTME BURADA
-                img.onclick = () => openLightbox(img.src);
+                
+                // TIKLAYINCA BÜYÜTME ÖZELLİĞİ FOTOĞRAFA DEĞİL KUTUYA BAĞLANDI
+                slot.onclick = () => openLightbox(img.src);
+                
                 slot.appendChild(img);
                 document.getElementById('photo-grid').appendChild(slot);
             };
@@ -569,7 +562,7 @@
         function reveal() {
             const audio = document.getElementById('myBeat');
             audio.play().then(() => {
-                setupAudio(); // Ses çaldığında visualizer'ı başlat
+                setupAudio(); 
             }).catch(e => console.log("Audio API hatası"));
             
             const audioBtn = document.getElementById('audio-btn');
@@ -587,7 +580,7 @@
                 glow.style.top = (window.innerHeight * 0.3) + 'px';
                 glow.style.opacity = '1';
                 updateGlow();
-                initTilt(); // İlk açılışta kartları ayarla
+                initTilt(); 
             }, 600);
         }
 
